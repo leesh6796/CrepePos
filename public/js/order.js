@@ -26,9 +26,20 @@ function order()
                 $.post(url, function(data) {
                         if(data === "complete")
                                 location.href= '/';
-                        else {
-                                alert('Error');
+                        else if(data === "overwrite bell") {
+                                alert('번호표가 중복됩니다.');
                         }
                 });
         }
+}
+
+function completeOrder(id)
+{
+        var url = "order/complete/" + id.toString();
+        $.ajax({
+                url: url,
+                type: 'PUT'
+        }).done(function() {
+                $('#order_' + id.toString()).remove();
+        });
 }

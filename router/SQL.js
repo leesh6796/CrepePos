@@ -2,28 +2,43 @@
 module.exports = class SQL {
         constructor() {
                 var mysql = require('mysql');
-                this.conn = mysql.createConnection({
+                this.pool = mysql.createPool({
                         host : 'localhost',
                         user : 'crepe',
                         password : 'piastcrepe!!',
-                        database : 'crepe'
+                        database : 'crepe',
+                        waitForConnections:true,
+                        connectionLimit:20
                 });
 
-                this.conn.connect();
+                //this.conn.connect();
         }
 
         execute(query, cont) {
-                this.conn.query(query, function(error, results, fields) {
-                        if(error) throw error;
-                        cont(results, fields);
+                this.pool.getConnection(function(err, conn) {
+                        if(err) {
+                                throw err;
+                        }
+
+                        conn.query(query, function(error, results, fields) {
+                                if(error) {
+                                        conn.release();
+                                        throw error;
+                                }
+                                cont(results, fields);
+
+                                conn.release();
+                        });
                 });
         }
 
         escape(data) {
-                return this.conn.escape(data);
+                return this.pool.escape(data);
         }
 
         close() {
-                this.conn.end();
+                this.pool.end(function(err) {
+                        if(err) throw err;
+                });
         }
 };
