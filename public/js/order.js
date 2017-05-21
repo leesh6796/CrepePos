@@ -12,6 +12,10 @@ function order()
         {
                 alert('음수는 안받습니다');
         }
+        else if(n_strawberry === 0 && n_banana === 0)
+        {
+                alert('둘 다 0은 안됩니다.');
+        }
         else if(isNaN(n_strawberry) || isNaN(n_banana) || isNaN(bell))
         {
                 alert('숫자만 입력해주세요');
@@ -39,6 +43,17 @@ function completeOrder(id)
         $.ajax({
                 url: url,
                 type: 'PUT'
+        }).done(function() {
+                $('#order_' + id.toString()).remove();
+        });
+}
+
+function deleteOrder(id)
+{
+        var url = "order/delete/" + id.toString();
+        $.ajax({
+                url: url,
+                type: 'DELETE'
         }).done(function() {
                 $('#order_' + id.toString()).remove();
         });

@@ -10,5 +10,6 @@ router.route('/neworder').get(redirector.getNewOrder);
 router.route('/order/add/:bell/:n_strawberry/:n_banana').post(order.postAdd);
 router.route('/order/get').get(order.getGet);
 router.route('/order/complete/:id').put(order.putComplete);
+router.route('/order/delete/:id').delete(order.deleteOrder);
 
 module.exports = router;

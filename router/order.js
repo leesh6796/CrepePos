@@ -17,6 +17,7 @@ var getTime = function() {
 };
 
 vsprintf = require('sprintf-js').vsprintf;
+replaceAll = require('replaceall');
 
 module.exports = {
         postAdd : function(req, res) // 새로운 주문
@@ -30,9 +31,6 @@ module.exports = {
                 var price_banana = 2000;
 
                 var price = price_strawberry * n_strawberry + price_banana * n_banana;
-
-                /*var SQL = require('./SQL');
-                sql = new SQL();*/
 
                 pool = require('./pool');
                 pool.getConnection(function(err, conn) {
@@ -139,7 +137,19 @@ module.exports = {
                         });
                 });
         },
-        deleteCrepe : function(req, res) {
+        deleteOrder : function(req, res) {
+                pool = require('./pool');
+                pool.getConnection(function(err, conn) {
+                        if(err) throw err;
 
+                        // pool.escapes는 ''가 붙어나오므로 제거해준다.
+                        var id = parseInt(replaceAll("\'", "", pool.escape(req.params.id)));
+                        var query = "delete from queue where id=" + id.toString() + ";";
+                        conn.query(query, function(error, results, fields) {
+                                if(error) throw error;
+                                res.send({success : "Delete Successfully", status : 200});
+                                conn.release();
+                        });
+                });
         }
 };
