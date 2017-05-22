@@ -24,6 +24,21 @@ function initMainPage() {
         });
 }
 
+function initResultPage() {
+        $.get("order/get/result", function(data) {
+                var res = data;
+
+                var n_strawberry = res.n_strawberry;
+                var n_banana = res.n_banana;
+                var price = 2500 * n_strawberry + 2000 * n_banana;
+
+                $('#n_strawberry').html('딸기 크레페는 ' + n_strawberry.toString() + '개 팔렸습니다.');
+                $('#n_banana').html('바나나 크레페는 ' + n_banana.toString() + '개 팔렸습니다.');
+                $('#n_sum').html('크레페는 총 ' + (n_strawberry + n_banana).toString() + '개 팔렸습니다.');
+                $('#price').html('총 매출액은 ' + price.toString() + '원 입니다.');
+        });
+}
+
 function isPC()
 {
 	var agent = navigator.userAgent.toLowerCase();
