@@ -173,8 +173,14 @@ module.exports = {
                                 var query = "delete from queue where id=" + id.toString() + ";";
                                 conn.query(query, function(error, results, fields) {
                                         if(error) throw error;
-                                        res.send({success : "Delete Successfully", status : 200});
-                                        conn.release();
+
+                                        query = vsprintf("insert into log(type, parameter, time) values('delete', %d, '%s');", [id, getTime()]);
+                                        conn.query(query, function(error, results, fields) {
+                                                if(error) throw error;
+
+                                                conn.release();
+                                                res.send({success : "Delete Successfully", status : 200});
+                                        });
                                 });
                         }
                 });

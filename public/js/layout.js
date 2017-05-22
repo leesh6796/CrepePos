@@ -17,7 +17,9 @@ function initMainPage() {
                         var strTime = time.split('-');
                         strTime = "2017년 5월 " + strTime[0] + "일 " + strTime[1] + "시 " + strTime[2] + "분 " + strTime[3] + "초";
 
-                	var dom = '<li id=\"order_' + id.toString() + '\" class=\"list-group-item\"><span class="badge">' + bell.toString() + '</span><h4 class=\"list-group-item-heading\">딸기 ' + n_strawberry + '개 바나나 ' + n_banana + '개<a class=\"inListLink\" onclick=\"if(confirm(\'완료하시겠습니까?\')) completeOrder(' + id + ')\">완료</a></h4><p class=\"list-group-item-text\">' + strTime + '   <a onclick=\"if(confirm(\'삭제하시겠습니까?\')) deleteOrder(' + id + ');\">삭제</a></p></li>';
+                        price = 2500 * n_strawberry + 2000 * n_banana;
+
+                	var dom = '<li id=\"order_' + id.toString() + '\" class=\"list-group-item\"><span class="badge">' + bell.toString() + '</span><h4 class=\"list-group-item-heading\">딸기 ' + n_strawberry + '개 바나나 ' + n_banana + '개    ' + price + '원<a class=\"inListLink\" onclick=\"if(confirm(\'완료하시겠습니까?\')) completeOrder(' + id + ')\">완료</a></h4><p class=\"list-group-item-text\">' + strTime + '   <a onclick=\"if(confirm(\'삭제하시겠습니까?\')) deleteOrder(' + id + ');\">삭제</a></p></li>';
 
                 	$('#mainlist').append(dom);
                 }

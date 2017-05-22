@@ -26,8 +26,8 @@ app.use(session({
  saveUninitialized: true
 }));
 
-app.listen(3000, function() {
-        console.log('Connected at 3000');
+app.listen(80, function() {
+        console.log('Connected at 80');
 });
 
 var router = require('./router/router');
